@@ -6,7 +6,7 @@
     "start": "next start"
   },
   "dependencies": {
-    "@aws-amplify/ui-react": "3.5.9",
+    "@aws-amplify/ui-react": "6.0.5",
     "aws-amplify": "4.3.39",
     "next": "latest",
     "react": "18.2.0",
