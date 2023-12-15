@@ -23,7 +23,7 @@
     "next": "latest",
     "payload": "1.9.2",
     "payload-admin-bar": "^1.0.5",
-    "pino-pretty": "^9.1.1",
+    "pino-pretty": "^10.3.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "sass": "^1.58.2",
