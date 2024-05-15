@@ -394,6 +394,7 @@ export type SanityAssistSchemaTypeField = {
 };
 export declare const internalGroqTypeReferenceTo: unique symbol;
 
+
 // Source: ./sanity/lib/queries.ts
 // Variable: settingsQuery
 // Query: *[_type == "settings"][0]
@@ -605,9 +606,12 @@ export type PostQueryResult = {
   } | null;
 } | null;
 
+
 // Source: ./app/(blog)/posts/[slug]/page.tsx
 // Variable: postSlugs
 // Query: *[_type == "post"]{slug}
 export type PostSlugsResult = Array<{
   slug: Slug | null;
 }>;
+
+

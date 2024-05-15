@@ -1,14 +1,13 @@
-import "../globals.css";
+export const metadata = {
+  referrer: "same-origin",
+  robots: "noindex",
+};
 
-import { Inter } from "next/font/google";
-
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
-  display: "swap",
-});
-
-export { metadata, viewport } from "next-sanity/studio";
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+};
 
 export default function RootLayout({
   children,
@@ -16,8 +15,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={inter.variable}>
-      <body className="min-h-screen">{children}</body>
+    <html lang="en">
+      <body style={{ margin: 0 }}>{children}</body>
     </html>
   );
 }
