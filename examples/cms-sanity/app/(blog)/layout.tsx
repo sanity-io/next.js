@@ -3,8 +3,8 @@ import "../globals.css";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { Metadata } from "next";
 import {
-  VisualEditing,
   toPlainText,
+  VisualEditing,
   type PortableTextBlock,
 } from "next-sanity";
 import { Inter } from "next/font/google";
@@ -15,12 +15,13 @@ import AlertBanner from "./alert-banner";
 import PortableText from "./portable-text";
 
 import * as demo from "@/sanity/lib/demo";
-import { sanityFetch } from "@/sanity/lib/fetch";
+import { sanityFetch, SanityLive } from "@/sanity/lib/live";
 import { settingsQuery } from "@/sanity/lib/queries";
 import { resolveOpenGraphImage } from "@/sanity/lib/utils";
+import { handleDraftModeAction } from "./actions";
 
 export async function generateMetadata(): Promise<Metadata> {
-  const settings = await sanityFetch({
+  const { data: settings } = await sanityFetch({
     query: settingsQuery,
     // Metadata should never contain stega
     stega: false,
@@ -57,7 +58,7 @@ const inter = Inter({
 });
 
 async function Footer() {
-  const data = await sanityFetch({ query: settingsQuery });
+  const { data } = await sanityFetch({ query: settingsQuery });
   const footer = data?.footer || [];
 
   return (
@@ -110,6 +111,10 @@ export default function RootLayout({
           </Suspense>
         </section>
         {draftMode().isEnabled && <VisualEditing />}
+        <SanityLive
+          ignoreBrowserTokenWarning
+          handleDraftModeAction={handleDraftModeAction}
+        />
         <SpeedInsights />
       </body>
     </html>

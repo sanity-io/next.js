@@ -1,6 +1,5 @@
-import { defineQuery } from "next-sanity";
 import type { Metadata, ResolvingMetadata } from "next";
-import { type PortableTextBlock } from "next-sanity";
+import { defineQuery, type PortableTextBlock } from "next-sanity";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
@@ -12,7 +11,7 @@ import MoreStories from "../../more-stories";
 import PortableText from "../../portable-text";
 
 import * as demo from "@/sanity/lib/demo";
-import { sanityFetch } from "@/sanity/lib/fetch";
+import { sanityFetch } from "@/sanity/lib/live";
 import { postQuery, settingsQuery } from "@/sanity/lib/queries";
 import { resolveOpenGraphImage } from "@/sanity/lib/utils";
 
@@ -25,18 +24,23 @@ const postSlugs = defineQuery(
 );
 
 export async function generateStaticParams() {
-  return await sanityFetch({
+  const { data } = await sanityFetch({
     query: postSlugs,
     perspective: "published",
     stega: false,
   });
+  return data;
 }
 
 export async function generateMetadata(
   { params }: Props,
   parent: ResolvingMetadata,
 ): Promise<Metadata> {
-  const post = await sanityFetch({ query: postQuery, params, stega: false });
+  const { data: post } = await sanityFetch({
+    query: postQuery,
+    params,
+    stega: false,
+  });
   const previousImages = (await parent).openGraph?.images || [];
   const ogImage = resolveOpenGraphImage(post?.coverImage);
 
@@ -51,7 +55,7 @@ export async function generateMetadata(
 }
 
 export default async function PostPage({ params }: Props) {
-  const [post, settings] = await Promise.all([
+  const [{ data: post }, { data: settings }] = await Promise.all([
     sanityFetch({ query: postQuery, params }),
     sanityFetch({ query: settingsQuery }),
   ]);
