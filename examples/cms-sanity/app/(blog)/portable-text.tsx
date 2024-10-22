@@ -10,9 +10,10 @@
 
 import {
   PortableText,
-  type PortableTextComponents,
   type PortableTextBlock,
+  type PortableTextComponents,
 } from "next-sanity";
+import type { CSSProperties } from "react";
 
 export default function CustomPortableText({
   className,
@@ -23,17 +24,56 @@ export default function CustomPortableText({
 }) {
   const components: PortableTextComponents = {
     block: {
-      h5: ({ children }) => (
-        <h5 className="mb-2 text-sm font-semibold">{children}</h5>
+      normal: ({ children, value }) => (
+        <p style={style(value?._key)}>{children}</p>
       ),
-      h6: ({ children }) => (
-        <h6 className="mb-1 text-xs font-semibold">{children}</h6>
+      blockquote: ({ children, value }) => (
+        <blockquote style={style(value?._key)}>{children}</blockquote>
+      ),
+      h1: ({ children, value }) => (
+        <h1 style={style(value?._key)}>{children}</h1>
+      ),
+      h2: ({ children, value }) => (
+        <h2 style={style(value?._key)}>{children}</h2>
+      ),
+      h3: ({ children, value }) => (
+        <h3 style={style(value?._key)}>{children}</h3>
+      ),
+      h4: ({ children, value }) => (
+        <h4 style={style(value?._key)}>{children}</h4>
+      ),
+      h5: ({ children, value }) => (
+        <h5 style={style(value?._key)} className="mb-2 text-sm font-semibold">
+          {children}
+        </h5>
+      ),
+      h6: ({ children, value }) => (
+        <h6 style={style(value?._key)} className="mb-1 text-xs font-semibold">
+          {children}
+        </h6>
       ),
     },
+    list: {
+      number: ({ children, value }) => (
+        <ol style={style(value?._key)}>{children}</ol>
+      ),
+      bullet: ({ children, value }) => (
+        <ul style={style(value?._key)}>{children}</ul>
+      ),
+    },
+    listItem: ({ children, value }) => (
+      <li key={value?._key} style={style(value?._key)}>
+        {children}
+      </li>
+    ),
     marks: {
       link: ({ children, value }) => {
         return (
-          <a href={value?.href} rel="noreferrer noopener">
+          <a
+            href={value?.href}
+            className="whitespace-nowrap"
+            rel="noreferrer noopener"
+          >
             {children}
           </a>
         );
@@ -46,4 +86,14 @@ export default function CustomPortableText({
       <PortableText components={components} value={value} />
     </div>
   );
+}
+
+function getViewTransitionName(value: string | undefined) {
+  return value ? `pt-${value}` : undefined;
+}
+
+function style(value: string | undefined): CSSProperties {
+  return {
+    viewTransitionName: getViewTransitionName(value),
+  };
 }

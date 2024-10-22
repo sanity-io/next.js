@@ -1,16 +1,23 @@
 {
   "private": true,
   "scripts": {
+    "build": "next build",
     "predev": "npm run typegen",
     "dev": "next --turbo",
-    "prebuild": "npm run typegen",
-    "build": "next build",
-    "start": "next start",
+    "format": "prettier --cache --write .",
     "lint": "next lint",
     "presetup": "echo 'about to setup env variables, follow the guide here: https://github.com/vercel/next.js/tree/canary/examples/cms-sanity#using-the-sanity-cli'",
     "setup": "npx sanity@latest init --env .env.local",
     "postsetup": "echo 'create the read token by following the rest of the guide: https://github.com/vercel/next.js/tree/canary/examples/cms-sanity#creating-a-read-token'",
+    "start": "next start",
     "typegen": "sanity schema extract && sanity typegen generate"
+  },
+  "prettier": {
+    "plugins": [
+      "@ianvs/prettier-plugin-sort-imports",
+      "prettier-plugin-packagejson",
+      "prettier-plugin-tailwindcss"
+    ]
   },
   "dependencies": {
     "@sanity/assist": "^3.0.8",
@@ -25,20 +32,29 @@
     "@vercel/speed-insights": "^1.0.13",
     "autoprefixer": "^10.4.20",
     "date-fns": "^4.1.0",
-    "next": "^15.0.0",
-    "next-sanity": "^9.7.0",
+    "framer-motion": "12.0.0-alpha.1",
+    "next": "^15.0.1",
+    "next-sanity": "^9.8.4",
     "postcss": "^8.4.47",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-error-boundary": "^4.1.2",
+    "react-fast-compare": "^3.2.2",
     "sanity": "^3.62.0",
     "sanity-plugin-asset-source-unsplash": "^3.0.1",
-    "server-only": "^0.0.1",
+    "sonner": "^1.5.0",
     "styled-components": "^6.1.13",
     "tailwindcss": "^3.4.14",
-    "typescript": "5.6.3"
+    "typescript": "5.6.3",
+    "use-effect-event": "^1.0.2",
+    "use-view-transitions": "^1.0.16"
   },
   "devDependencies": {
+    "@ianvs/prettier-plugin-sort-imports": "^4.3.1",
     "eslint": "^9.13.0",
-    "eslint-config-next": "^15.0.0"
+    "eslint-config-next": "^15.0.1",
+    "prettier": "^3.3.3",
+    "prettier-plugin-packagejson": "^2.5.3",
+    "prettier-plugin-tailwindcss": "^0.6.8"
   }
 }
